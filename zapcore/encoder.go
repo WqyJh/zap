@@ -352,8 +352,9 @@ type ObjectEncoder interface {
 	AddObject(key string, marshaler ObjectMarshaler) error
 
 	// Built-in types.
-	AddBinary(key string, value []byte)     // for arbitrary bytes
-	AddByteString(key string, value []byte) // for UTF-8 encoded bytes
+	AddBinary(key string, value []byte)        // for arbitrary bytes
+	AddByteString(key string, value []byte)    // for UTF-8 encoded bytes
+	AddRawByteString(key string, value []byte) // for UTF-8 encoded raw json bytes
 	AddBool(key string, value bool)
 	AddComplex128(key string, value complex128)
 	AddComplex64(key string, value complex64)
@@ -366,6 +367,7 @@ type ObjectEncoder interface {
 	AddInt16(key string, value int16)
 	AddInt8(key string, value int8)
 	AddString(key, value string)
+	AddRawString(key, value string) // raw json string
 	AddTime(key string, value time.Time)
 	AddUint(key string, value uint)
 	AddUint64(key string, value uint64)

@@ -62,6 +62,9 @@ func (m *MapObjectEncoder) AddBinary(k string, v []byte) { m.cur[k] = v }
 // AddByteString implements ObjectEncoder.
 func (m *MapObjectEncoder) AddByteString(k string, v []byte) { m.cur[k] = string(v) }
 
+// AddRawByteString implements ObjectEncoder.
+func (m *MapObjectEncoder) AddRawByteString(k string, v []byte) { m.cur[k] = string(v) }
+
 // AddBool implements ObjectEncoder.
 func (m *MapObjectEncoder) AddBool(k string, v bool) { m.cur[k] = v }
 
@@ -97,6 +100,9 @@ func (m *MapObjectEncoder) AddInt8(k string, v int8) { m.cur[k] = v }
 
 // AddString implements ObjectEncoder.
 func (m *MapObjectEncoder) AddString(k string, v string) { m.cur[k] = v }
+
+// AddRawString implements ObjectEncoder.
+func (m *MapObjectEncoder) AddRawString(k string, v string) { m.cur[k] = v }
 
 // AddTime implements ObjectEncoder.
 func (m MapObjectEncoder) AddTime(k string, v time.Time) { m.cur[k] = v }

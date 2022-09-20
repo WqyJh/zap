@@ -120,6 +120,11 @@ func (enc *jsonEncoder) AddByteString(key string, val []byte) {
 	enc.AppendByteString(val)
 }
 
+func (enc *jsonEncoder) AddRawByteString(key string, val []byte) {
+	enc.addKey(key)
+	enc.AppendRawByteString(val)
+}
+
 func (enc *jsonEncoder) AddBool(key string, val bool) {
 	enc.addKey(key)
 	enc.AppendBool(val)
@@ -201,6 +206,11 @@ func (enc *jsonEncoder) AddString(key, val string) {
 	enc.AppendString(val)
 }
 
+func (enc *jsonEncoder) AddRawString(key string, val string) {
+	enc.addKey(key)
+	enc.AppendRawString(val)
+}
+
 func (enc *jsonEncoder) AddTime(key string, val time.Time) {
 	enc.addKey(key)
 	enc.AppendTime(val)
@@ -243,6 +253,16 @@ func (enc *jsonEncoder) AppendByteString(val []byte) {
 	enc.buf.AppendByte('"')
 	enc.safeAddByteString(val)
 	enc.buf.AppendByte('"')
+}
+
+func (enc *jsonEncoder) AppendRawByteString(val []byte) {
+	enc.addElementSeparator()
+	enc.addRawByteString(val)
+}
+
+func (enc *jsonEncoder) AppendRawString(val string) {
+	enc.addElementSeparator()
+	enc.addRawString(val)
 }
 
 // appendComplex appends the encoded form of the provided complex128 value.
@@ -520,6 +540,14 @@ func (enc *jsonEncoder) safeAddByteString(s []byte) {
 		enc.buf.Write(s[i : i+size])
 		i += size
 	}
+}
+
+func (enc *jsonEncoder) addRawString(s string) {
+	enc.buf.AppendString(s)
+}
+
+func (enc *jsonEncoder) addRawByteString(s []byte) {
+	enc.buf.AppendBytes(s)
 }
 
 // tryAddRuneSelf appends b if it is valid UTF-8 character represented in a single byte.
