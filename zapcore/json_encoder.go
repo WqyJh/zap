@@ -555,7 +555,7 @@ func (enc *jsonEncoder) tryAddRuneSelf(b byte) bool {
 
 func (enc *jsonEncoder) tryAddRuneError(r rune, size int) bool {
 	if r == utf8.RuneError && size == 1 {
-		enc.buf.AppendString(`\ufffd`)
+		enc.buf.AppendString(enc.RuneError)
 		return true
 	}
 	return false
