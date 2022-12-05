@@ -342,7 +342,9 @@ type EncoderConfig struct {
 	// to tab.
 	ConsoleSeparator string `json:"consoleSeparator" yaml:"consoleSeparator"`
 
-	RuneError string `json:"runeError" yaml:"runeError"`
+	RuneError              string `json:"runeError" yaml:"runeError"`
+	PrintableOnly          bool   `json:"printableOnly" yaml:"printableOnly"`
+	UnprintablePlaceholder string `json:"unprintablePlaceholder" yaml:"unprintablePlaceholder"`
 }
 
 // ObjectEncoder is a strongly-typed, encoding-agnostic interface for adding a

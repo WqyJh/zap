@@ -110,6 +110,9 @@ func NewProductionEncoderConfig() zapcore.EncoderConfig {
 		EncodeDuration: zapcore.SecondsDurationEncoder,
 		EncodeCaller:   zapcore.ShortCallerEncoder,
 		RuneError:      `\ufffd`,
+
+		PrintableOnly:          false,
+		UnprintablePlaceholder: "",
 	}
 }
 
@@ -151,6 +154,9 @@ func NewDevelopmentEncoderConfig() zapcore.EncoderConfig {
 		EncodeDuration: zapcore.StringDurationEncoder,
 		EncodeCaller:   zapcore.ShortCallerEncoder,
 		RuneError:      `\ufffd`,
+
+		PrintableOnly:          false,
+		UnprintablePlaceholder: "",
 	}
 }
 

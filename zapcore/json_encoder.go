@@ -25,6 +25,7 @@ import (
 	"math"
 	"sync"
 	"time"
+	"unicode"
 	"unicode/utf8"
 
 	"go.uber.org/zap/buffer"
@@ -500,6 +501,11 @@ func (enc *jsonEncoder) safeAddString(s string) {
 			i++
 			continue
 		}
+		if enc.PrintableOnly && !unicode.IsPrint(r) {
+			enc.buf.AppendString(enc.UnprintablePlaceholder)
+			i += size
+			continue
+		}
 		enc.buf.AppendString(s[i : i+size])
 		i += size
 	}
@@ -517,6 +523,11 @@ func (enc *jsonEncoder) safeAddByteString(s []byte) {
 			i++
 			continue
 		}
+		if enc.PrintableOnly && !unicode.IsPrint(r) {
+			enc.buf.AppendString(enc.UnprintablePlaceholder)
+			i += size
+			continue
+		}
 		enc.buf.Write(s[i : i+size])
 		i += size
 	}
@@ -526,6 +537,12 @@ func (enc *jsonEncoder) safeAddByteString(s []byte) {
 func (enc *jsonEncoder) tryAddRuneSelf(b byte) bool {
 	if b >= utf8.RuneSelf {
 		return false
+	}
+	if enc.PrintableOnly {
+		if b < 0x20 || b == 0x7f {
+			enc.buf.WriteString(enc.UnprintablePlaceholder)
+			return true
+		}
 	}
 	if 0x20 <= b && b != '\\' && b != '"' {
 		enc.buf.AppendByte(b)
